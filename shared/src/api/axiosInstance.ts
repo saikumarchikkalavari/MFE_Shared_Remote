@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from "axios";
-import { msalInstance } from "../auth/msalInstance";
-import { tokenRequest } from "../auth/authConfig";
+import { msalInstance } from "../Auth/msalInstance";
+import { tokenRequest } from "../Auth/authConfig";
 
 const AD_GROUP_IDS_KEY = "user-ad-group-ids";
 

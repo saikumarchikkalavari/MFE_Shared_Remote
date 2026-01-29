@@ -74,6 +74,20 @@ declare module 'shared/Button' {
 declare module 'shared/theme' {
   import { Theme } from '@mui/material/styles';
   export const theme: Theme;
+  export const fontTokens: {
+    xs: string;
+    sm: string;
+    base: string;
+    lg: string;
+    xl: string;
+    '4xl': string;
+  };
+  export const fontWeights: {
+    light: number;
+    normal: number;
+    bold: number;
+  };
+  export const brandColors: Record<string, string>;
 }
 
 declare module 'shared/api' {

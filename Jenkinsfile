@@ -24,51 +24,37 @@ pipeline {
             }
         }
         
-        stage('Install Dependencies - Host') {
+        stage('Install Dependencies') {
+            parallel {
+                stage('Host') {
+                    steps {
+                        dir('host') {
+                            bat 'npm ci'
+                        }
+                    }
+                }
+                stage('Shared') {
+                    steps {
+                        dir('shared') {
+                            bat 'npm ci'
+                        }
+                    }
+                }
+                stage('Remote') {
+                    steps {
+                        dir('remote') {
+                            bat 'npm ci'
+                        }
+                    }
+                }
+            }
+        }
+        
+        stage('Type Check') {
             steps {
                 dir('host') {
-                    echo 'Installing Host dependencies...'
-                    bat 'npm ci'
-                }
-            }
-        }
-        
-        stage('Install Dependencies - Shared') {
-            steps {
-                dir('shared') {
-                    echo 'Installing Shared dependencies...'
-                    bat 'npm ci'
-                }
-            }
-        }
-        
-        stage('Install Dependencies - Remote') {
-            steps {
-                dir('remote') {
-                    echo 'Installing Remote dependencies...'
-                    bat 'npm ci'
-                }
-            }
-        }
-        
-        stage('Lint & Type Check') {
-            parallel {
-                stage('Lint Host') {
-                    steps {
-                        dir('host') {
-                            echo 'Linting Host...'
-                            // Uncomment when eslint is configured
-                            // bat 'npm run lint'
-                        }
-                    }
-                }
-                stage('Type Check Host') {
-                    steps {
-                        dir('host') {
-                            echo 'Type checking Host...'
-                            bat 'npx tsc --noEmit'
-                        }
-                    }
+                    echo 'Type checking Host...'
+                    bat 'npx tsc --noEmit'
                 }
             }
         }
@@ -112,50 +98,35 @@ pipeline {
         
         stage('Build') {
             parallel {
-                stage('Build Host') {
+                stage('Host') {
                     steps {
                         dir('host') {
-                            echo 'Building Host application...'
                             bat 'npm run build'
                         }
                     }
                 }
-                stage('Build Shared') {
+                stage('Shared') {
                     steps {
                         dir('shared') {
-                            echo 'Building Shared library...'
                             bat 'npm run build'
                         }
                     }
                 }
-                stage('Build Remote') {
+                stage('Remote') {
                     steps {
                         dir('remote') {
-                            echo 'Building Remote application...'
                             bat 'npm run build'
                         }
                     }
                 }
             }
-        }
-        
-        stage('Archive Artifacts') {
-            steps {
-                echo 'Archiving build artifacts...'
-                archiveArtifacts(
-                    artifacts: '**/dist/**/*',
-                    fingerprint: true,
-                    allowEmptyArchive: true
-                )
-            }
-        }
-        
-        stage('Quality Gate') {
-            steps {
-                script {
-                    echo 'Checking quality gate...'
-                    // Add quality gate checks here
-                    // Example: Check if test coverage meets threshold
+            post {
+                success {
+                    archiveArtifacts(
+                        artifacts: 'host/dist/**/*,shared/dist/**/*,remote/dist/**/*',
+                        fingerprint: true,
+                        allowEmptyArchive: true
+                    )
                 }
             }
         }
