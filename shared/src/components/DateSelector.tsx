@@ -3,7 +3,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
-interface DateSelectorProps {
+export interface DateSelectorProps {
   /** Current date value */
   value: Date | null;
   /** Callback fired when date changes */
@@ -96,4 +96,5 @@ const DateSelector: React.FC<DateSelectorProps> = ({
   );
 };
 
+export { DateSelector };
 export default DateSelector;

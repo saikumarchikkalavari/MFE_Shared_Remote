@@ -14,7 +14,10 @@ module.exports = {
   },
   moduleNameMapper: {
     '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
-    '^shared/(.*)$': '<rootDir>/__mocks__/sharedMock.ts',
+    '^react$': '<rootDir>/node_modules/react',
+    '^react-dom$': '<rootDir>/node_modules/react-dom',
+    '^shared/components/(.*)$': '<rootDir>/../shared/src/components/$1',
+    '^shared/(.*)$': '<rootDir>/../shared/src/$1',
     '^products/(.*)$': '<rootDir>/__mocks__/remoteMock.ts',
     '^orders/(.*)$': '<rootDir>/__mocks__/remoteMock.ts',
     '^customers/(.*)$': '<rootDir>/__mocks__/remoteMock.ts',
