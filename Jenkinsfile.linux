@@ -75,14 +75,6 @@ pipeline {
                         reportName: 'Test Coverage Report',
                         reportTitles: 'Coverage Report'
                     ])
-                    
-                    // Publish Cobertura coverage
-                    publishCoverage(
-                        adapters: [
-                            coberturaAdapter('host/coverage/cobertura-coverage.xml')
-                        ],
-                        sourceFileResolver: sourceFiles('STORE_ALL_BUILD')
-                    )
                 }
             }
         }
