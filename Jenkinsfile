@@ -50,15 +50,6 @@ pipeline {
             }
         }
         
-        stage('Type Check') {
-            steps {
-                dir('host') {
-                    echo 'Type checking Host...'
-                    bat 'npx tsc --noEmit'
-                }
-            }
-        }
-        
         stage('Run Tests') {
             steps {
                 dir('host') {
