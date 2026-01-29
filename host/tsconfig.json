@@ -13,7 +13,7 @@
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
-      "shared/*": ["./src/@types/shared/*"],
+      "shared/*": ["../shared/src/*"],
       "products/*": ["./src/@types/products/*"],
       "orders/*": ["./src/@types/orders/*"],
       "customers/*": ["./src/@types/customers/*"]

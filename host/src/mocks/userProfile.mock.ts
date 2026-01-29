@@ -4,10 +4,7 @@ import { UserProfile } from "../types";
  * Mock User Profile Data
  */
 export const mockUserProfile: UserProfile = {
-  id: "user-123",
-  email: "john.doe@company.com",
-  name: "John Doe",
-  role: "Manager",
-  department: "Sales",
-  permissions: ["view_products", "view_orders", "view_customers", "edit_products"],
+  tenant_id: 123,
+  ad_groups: ["Sales-Manager", "Product-Viewer"],
+  ad_group_ids: [1001, 1002],
 };
