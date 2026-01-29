@@ -26,10 +26,34 @@ module.exports = {
     '!src/index.ts',
     '!src/**/*.stories.tsx',
   ],
+  coverageReporters: ['text', 'lcov', 'cobertura', 'html'],
+  coverageDirectory: 'coverage',
+  reporters: [
+    'default',
+    ['jest-junit', {
+      outputDirectory: 'coverage',
+      outputName: 'junit.xml',
+      classNameTemplate: '{classname}',
+      titleTemplate: '{title}',
+      ancestorSeparator: ' › ',
+      usePathForSuiteName: true,
+    }],
+  ],
+  coverageThreshold: {
+    global: {
+      branches: 5,
+      functions: 5,
+      lines: 5,
+      statements: 5,
+    },
+  },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   globals: {
     'ts-jest': {
       isolatedModules: true,
     },
   },
+  testTimeout: 10000,
+  bail: false,
+  verbose: true,
 };
