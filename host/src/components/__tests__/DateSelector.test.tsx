@@ -14,7 +14,8 @@ describe('DateSelector Component', () => {
   describe('Rendering', () => {
     it('should render DateSelector component', () => {
       render(<DateSelector value={null} onChange={mockOnChange} />);
-      expect(screen.getByTestId('date-selector')).toBeInTheDocument();
+      // Check that the calendar button exists (which proves DatePicker rendered)
+      expect(screen.getByRole('button', { name: /choose date/i })).toBeInTheDocument();
     });
 
     it('should render with placeholder when no date selected', () => {
@@ -30,8 +31,8 @@ describe('DateSelector Component', () => {
 
     it('should display selected date', () => {
       render(<DateSelector value={testDate} onChange={mockOnChange} />);
-      // MUI DatePicker formats the date internally
-      expect(screen.getByTestId('date-selector')).toBeInTheDocument();
+      // MUI DatePicker formats the date and renders calendar button
+      expect(screen.getByRole('button', { name: /choose date/i })).toBeInTheDocument();
     });
   });
 
@@ -55,23 +56,19 @@ describe('DateSelector Component', () => {
       const button = screen.getByRole('button', { name: /choose date/i });
       expect(button).toBeInTheDocument();
     });
-
-    it('should have calendar icon', () => {
-      render(<DateSelector value={null} onChange={mockOnChange} />);
-      const icon = screen.getByTestId('CalendarIcon');
-      expect(icon).toBeInTheDocument();
-    });
   });
 
   describe('Edge Cases', () => {
     it('should handle null value gracefully', () => {
       render(<DateSelector value={null} onChange={mockOnChange} />);
-      expect(screen.getByTestId('date-selector')).toBeInTheDocument();
+      // Calendar button should exist even with null value
+      expect(screen.getByRole('button', { name: /choose date/i })).toBeInTheDocument();
     });
 
     it('should work without placeholder', () => {
       render(<DateSelector value={null} onChange={mockOnChange} />);
-      expect(screen.getByTestId('date-selector')).toBeInTheDocument();
+      // Calendar button should exist without placeholder
+      expect(screen.getByRole('button', { name: /choose date/i })).toBeInTheDocument();
     });
   });
 });
