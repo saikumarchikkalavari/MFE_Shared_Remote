@@ -13,17 +13,17 @@
     "test:ci:report": "jest --ci --coverage --maxWorkers=2 --coverageReporters=cobertura --coverageReporters=lcov --coverageReporters=text"
   },
   "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.3"
+  },
+  "devDependencies": {
     "@azure/msal-browser": "^5.0.2",
     "@azure/msal-react": "^5.0.2",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^6.4.2",
     "@tanstack/react-query": "^5.62.15",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-router-dom": "^7.1.3"
-  },
-  "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.16",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^16.0.1",

@@ -4,11 +4,9 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const webpack = require('webpack');
 const path = require('path');
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
-
 module.exports = {
   entry: './src/index.ts',
-  mode: isDevelopment ? 'development' : 'production',
+  mode: 'development',
   devServer: {
     port: 5002,
     hot: true,
@@ -114,9 +112,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(isDevelopment ? 'development' : 'production'),
-    }),
-    isDevelopment && new ReactRefreshWebpackPlugin(),
-  ].filter(Boolean),
+    new ReactRefreshWebpackPlugin(),
+  ],
 };
