@@ -4,9 +4,11 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const webpack = require('webpack');
 const path = require('path');
 
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
 module.exports = {
   entry: './src/index.ts',
-  mode: 'development',
+  mode: isDevelopment ? 'development' : 'production',
   devServer: {
     port: 5001,
     hot: true,
@@ -20,6 +22,11 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx'],
+  },
+  optimization: {
+    usedExports: true,
+    minimize: !isDevelopment,
+    sideEffects: true,
   },
   module: {
     rules: [
@@ -64,12 +71,22 @@ module.exports = {
         },
         '@mui/material': {
           singleton: true,
+          strictVersion: false,
+        },
+        '@mui/system': {
+          singleton: true,
+          strictVersion: false,
+          requiredVersion: false,
         },
         '@emotion/react': {
           singleton: true,
+          strictVersion: false,
+          requiredVersion: '^11.0.0',
         },
         '@emotion/styled': {
           singleton: true,
+          strictVersion: false,
+          requiredVersion: '^11.0.0',
         },
         'ag-grid-react': {
           singleton: true,
@@ -85,6 +102,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    new ReactRefreshWebpackPlugin(),
+    ...(isDevelopment ? [new ReactRefreshWebpackPlugin()] : []),
   ],
 };

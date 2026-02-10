@@ -141,7 +141,7 @@ declare module 'shared/types' {
   }
 }
 
-declare module 'shared/Auth' {
+declare module 'shared/auth' {
   import { FC } from 'react';
   import { Configuration, PopupRequest, PublicClientApplication } from '@azure/msal-browser';
   

@@ -2,6 +2,7 @@
   "name": "host",
   "version": "1.0.0",
   "description": "Host shell application",
+  "sideEffects": false,
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
@@ -15,15 +16,15 @@
   "dependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router-dom": "^7.1.3"
-  },
-  "devDependencies": {
+    "react-router-dom": "^7.1.3",
     "@azure/msal-browser": "^5.0.2",
     "@azure/msal-react": "^5.0.2",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
     "@mui/material": "^6.4.2",
-    "@tanstack/react-query": "^5.62.15",
+    "@tanstack/react-query": "^5.62.15"
+  },
+  "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.16",
     "@testing-library/jest-dom": "^6.1.5",
     "@testing-library/react": "^16.0.1",

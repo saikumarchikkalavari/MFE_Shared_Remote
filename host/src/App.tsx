@@ -22,7 +22,7 @@ import {
 import { InteractionType } from "@azure/msal-browser";
 
 // Import from shared remote
-import { msalInstance, LoginScreen, tokenRequest } from "shared/Auth";
+import { msalInstance, LoginScreen, tokenRequest } from "shared/auth";
 import { theme } from "shared/theme";
 import { queryClient, setUserAdGroupIds } from "shared/api";
 

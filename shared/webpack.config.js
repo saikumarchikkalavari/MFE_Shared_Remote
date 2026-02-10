@@ -4,9 +4,11 @@ const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin'
 const webpack = require('webpack');
 const path = require('path');
 
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
 module.exports = {
   entry: './src/index.ts',
-  mode: 'development',
+  mode: isDevelopment ? 'development' : 'production',
   devServer: {
     port: 5002,
     hot: true,
@@ -24,6 +26,11 @@ module.exports = {
       '.js': ['.js', '.ts', '.tsx'],
       '.mjs': ['.mjs', '.js'],
     },
+  },
+  optimization: {
+    usedExports: true,
+    minimize: !isDevelopment,
+    sideEffects: false,  // Enable better tree-shaking
   },
   module: {
     rules: [
@@ -65,7 +72,7 @@ module.exports = {
         './theme': './src/theme',
         './api': './src/api',
         './types': './src/types',
-        './Auth': './src/auth',
+        './auth': './src/auth',
         './AppState': './src/appState',
       },
       shared: {
@@ -79,12 +86,22 @@ module.exports = {
         },
         '@mui/material': {
           singleton: true,
+          strictVersion: false,
+        },
+        '@mui/system': {
+          singleton: true,
+          strictVersion: false,
+          requiredVersion: false,
         },
         '@emotion/react': {
           singleton: true,
+          strictVersion: false,
+          requiredVersion: '^11.0.0',
         },
         '@emotion/styled': {
           singleton: true,
+          strictVersion: false,
+          requiredVersion: '^11.0.0',
         },
         'ag-grid-react': {
           singleton: true,
@@ -103,15 +120,17 @@ module.exports = {
         },
         '@mui/x-date-pickers': {
           singleton: true,
+          eager: false,
         },
         'date-fns': {
           singleton: true,
+          eager: false,
         },
       },
     }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
-    new ReactRefreshWebpackPlugin(),
+    ...(isDevelopment ? [new ReactRefreshWebpackPlugin()] : []),
   ],
 };

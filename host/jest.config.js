@@ -18,9 +18,6 @@ module.exports = {
     '^react-dom$': '<rootDir>/node_modules/react-dom',
     '^shared/components/(.*)$': '<rootDir>/../shared/src/components/$1',
     '^shared/(.*)$': '<rootDir>/../shared/src/$1',
-    '^products/(.*)$': '<rootDir>/__mocks__/remoteMock.ts',
-    '^orders/(.*)$': '<rootDir>/__mocks__/remoteMock.ts',
-    '^customers/(.*)$': '<rootDir>/__mocks__/remoteMock.ts',
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   collectCoverageFrom: [
