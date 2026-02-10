@@ -51,29 +51,83 @@ pipeline {
         }
         
         stage('Run Tests') {
-            steps {
-                dir('host') {
-                    echo 'Running unit tests...'
-                    bat 'npm run test:ci:report'
+            parallel {
+                stage('Host Tests') {
+                    steps {
+                        dir('host') {
+                            echo 'Running Host unit tests...'
+                            bat 'npm run test:ci:report'
+                        }
+                    }
+                }
+                stage('Shared Tests') {
+                    steps {
+                        dir('shared') {
+                            echo 'Running Shared library tests...'
+                            bat 'npm test -- --ci --coverage --coverageDirectory=coverage'
+                        }
+                    }
+                }
+                stage('Remote Tests') {
+                    steps {
+                        dir('remote') {
+                            echo 'Running Remote application tests...'
+                            bat 'npm test -- --ci --coverage --coverageDirectory=coverage'
+                        }
+                    }
                 }
             }
             post {
                 always {
-                    // Publish test results
+                    // Publish test results from Host
                     junit(
                         allowEmptyResults: true,
                         testResults: 'host/coverage/junit.xml'
                     )
                     
-                    // Publish coverage reports
+                    // Publish test results from Shared
+                    junit(
+                        allowEmptyResults: true,
+                        testResults: 'shared/coverage/junit.xml'
+                    )
+                    
+                    // Publish test results from Remote
+                    junit(
+                        allowEmptyResults: true,
+                        testResults: 'remote/coverage/junit.xml'
+                    )
+                    
+                    // Publish coverage reports for Host
                     publishHTML([
-                        allowMissing: false,
+                        allowMissing: true,
                         alwaysLinkToLastBuild: true,
                         keepAll: true,
-                        reportDir: 'host/coverage',
+                        reportDir: 'host/coverage/lcov-report',
                         reportFiles: 'index.html',
-                        reportName: 'Test Coverage Report',
-                        reportTitles: 'Coverage Report'
+                        reportName: 'Host Test Coverage',
+                        reportTitles: 'Host Coverage Report'
+                    ])
+                    
+                    // Publish coverage reports for Shared
+                    publishHTML([
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'shared/coverage/lcov-report',
+                        reportFiles: 'index.html',
+                        reportName: 'Shared Test Coverage',
+                        reportTitles: 'Shared Coverage Report'
+                    ])
+                    
+                    // Publish coverage reports for Remote
+                    publishHTML([
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'remote/coverage/lcov-report',
+                        reportFiles: 'index.html',
+                        reportName: 'Remote Test Coverage',
+                        reportTitles: 'Remote Coverage Report'
                     ])
                 }
             }
